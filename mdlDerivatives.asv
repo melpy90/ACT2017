@@ -21,9 +21,9 @@ theta= arccos( LL/sqrt((f0(1,1)-f0(3,1))^2 +LL^2));
 phi= arccos( LL/sqrt((f0(1,1)-f0(4,1))^2 +LL^2));
 g=9.81;
 
-% p=[0 0 0]'; % initial position vector
-v=[sum(f0)*cos(psi) sum(f0)*cos(theta) sum(f0)*cos(phi)]'; % linear velocity        % vanno calcolate in base le 4 F...
-w=[diff(psi,t) diff(theta,t) diff(phi,t)]'; % angular velocity  d(angle)/dt
+% p=[0 0 0]'; % position vector
+v=[sum(f0)*cos(psi) sum(f0)*cos(psi) 2]'; % linear velocity        % vanno calcolate in base le 4 F...
+w=[3 4 3]'; % angular velocity
 gamma =[0 0 0]'; % torques vector
 % f = 100  % it is the sum of four motor trusts
 m = 20; % quadrotor mass
