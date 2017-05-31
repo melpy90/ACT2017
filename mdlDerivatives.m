@@ -21,16 +21,16 @@ g=9.81;
 v=[sum(f(3,:))*cos(psi) sum(f(3,:))*cos(theta) sum(f(3,:))*cos(phi)]'; % linear velocity        % vanno calcolate in base le 4 F...
 % w=[diff(psi,t), diff(theta,t), diff(phi,t)]'; % angular velocity  d(angle)/dt
 w = [psi/t theta/t phi/t]';
-gamma =[0 0 0]'; % torques vector
+gamma =[0.2 0.1 0.1]'; % torques vector
 % f = 100  % it is the sum of four motor trusts
-m = 20; % quadrotor mass
+m = 0.25; % quadrotor mass
 e3= [0 0 1]';
 
 % w x J*w = Omega
 
 % inertial matrix
 
-J=diag([jx jy jz]);
+%J=diag([jx jy jz]);
 
 % Omega = cross(w, J*w);
 

@@ -9,7 +9,6 @@ jy = 2.3
 jz = 3.4
 f0 = zeros(3,4);
 
-% set each motor force
 temp = [10 10 10 10]; 
 
 for i=1:4
@@ -17,7 +16,7 @@ for i=1:4
 end
 t = 0
 % p=[0 0 0]'
-MAXITER = 10  % time sampling...seconds
+MAXITER = 100  % time sampling...seconds
 
 f=f0; % for first time
 temp = zeros(3,MAXITER);
