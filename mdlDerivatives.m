@@ -5,24 +5,44 @@
 %=============================================================================
 
 function [sys pos f] = mdlDerivatives(t,x,u,jx,jy,jz,f)
-gg = [0 0 -9.81]';
+g = 9.81;
 LL = 0.2; % lenght between two motors
 % bb = 1;
 
-%psi =deg2rad(90);              % vanno calcolate in base le 4 F...
+             % the angles: pitch roll and yawl are
+%beeing calculated as written by trigonometrics at t=0
+
+%psi  
 psi = acos(LL/sqrt((f(3,1)-f(3,2))^2 +LL^2));
-%theta=deg2rad(60);
+%theta;
 theta = acos(LL/sqrt((f(3,1)-f(3,3))^2 +LL^2));
-%phi=deg2rad(30);
+%phi;
 phi= acos(LL/sqrt((f(3,1)-f(3,4))^2 +LL^2));
-g=9.81;
+
+
 
 % p=[0 0 0]'; % initial position vector
-v=[sum(f(3,:))*cos(psi) sum(f(3,:))*cos(theta) sum(f(3,:))*cos(phi)]'; % linear velocity        % vanno calcolate in base le 4 F...
+v=[sum(f(3,:))*cos(psi) sum(f(3,:))*cos(theta) sum(f(3,:))*cos(phi)]'; % linear velocity       
 % w=[diff(psi,t), diff(theta,t), diff(phi,t)]'; % angular velocity  d(angle)/dt
-w = [psi/t theta/t phi/t]';
+
+
+MAXITER = 10
+for t=1:MAXITER
+    
+    % computation of angles at t=1 an so on for obtain angular velocity
+    % with angle variation in dt.
+    
+psi_1 = acos(LL/sqrt((f(3,1)-f(3,2))^2 +LL^2));
+
+theta_1 = acos(LL/sqrt((f(3,1)-f(3,3))^2 +LL^2));
+
+phi_1= acos(LL/sqrt((f(3,1)-f(3,4))^2 +LL^2));
+
+w = [(psi_1-psi)/t (theta_1-theta)/t (phi_1-phi)/t]';
+end
+
 gamma =[0.2 0.1 0.1]'; % torques vector
-% f = 100  % it is the sum of four motor trusts
+
 m = 0.25; % quadrotor mass
 e3= [0 0 1]';
 
@@ -81,7 +101,9 @@ r_dot= w(1,1)*w(2,1)*((jx-jy)/jz) + gamma(3,1)/jz;
 
 % Component by component
 for i=1:4
-    f(:,i) = f(:,i)-D*ev+m*gg+R*f(:,i); % f with aerodynamics drag
+    f(:,i) = f(:,i)-D*ev+m*g+R*f(:,i); % f with aerodynamics drag
+    
+    
 end
 
 
